@@ -1,0 +1,6 @@
+@OrganicaCommerce.WebApi_HostAddress = http://localhost:5043
+
+GET {{OrganicaCommerce.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
