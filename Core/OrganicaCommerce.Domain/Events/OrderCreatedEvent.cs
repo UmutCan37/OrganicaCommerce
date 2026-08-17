@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediatR;
 
 namespace OrganicaCommerce.Domain.Events
 {
-    public class OrderCreatedEvent
+    public class OrderCreatedEvent: INotification
     {
         public Guid OrderId { get; }
         public Guid UserId { get; }
