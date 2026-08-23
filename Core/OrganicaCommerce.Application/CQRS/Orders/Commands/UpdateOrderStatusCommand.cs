@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using OrganicaCommerce.Application.CQRS.Orders.Results;
+using OrganicaCommerce.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace OrganicaCommerce.Application.CQRS.Orders.Commands
 {
-    public class CreateOrderCommand : IRequest<CreateOrderResult>
+    public class UpdateOrderStatusCommand : IRequest<bool>
     {
-        public Guid UserId { get; set; }
+        public Guid OrderId { get; set; }
+        public OrderStatus NewStatus { get; set; }
     }
 }

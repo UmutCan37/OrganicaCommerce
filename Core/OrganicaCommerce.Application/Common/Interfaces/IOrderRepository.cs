@@ -12,5 +12,7 @@ namespace OrganicaCommerce.Application.Common.Interfaces
         Task<List<Order>> GetByUserIdAsync(Guid userId);
         Task<int> GetTotalOrderCountAsync();
         Task<decimal> GetTotalRevenueAsync();
+
+        Task<Order?> GetByIdWithItemsAsync(Guid id);
     }
 }

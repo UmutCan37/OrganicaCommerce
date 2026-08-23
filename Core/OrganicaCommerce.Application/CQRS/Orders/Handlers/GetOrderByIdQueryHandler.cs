@@ -21,7 +21,7 @@ namespace OrganicaCommerce.Application.CQRS.Orders.Handlers
 
         public async Task<GetOrderByIdResult?> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
         {
-            var order = await _unitOfWork.Orders.GetByIdAsync(request.OrderId);
+            var order = await _unitOfWork.Orders.GetByIdWithItemsAsync(request.OrderId);
 
             if (order is null)
                 return null;
