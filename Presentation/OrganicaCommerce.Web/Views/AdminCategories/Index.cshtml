@@ -1,0 +1,48 @@
+﻿@model List<OrganicaCommerce.Contracts.Categories.CategoryResponse>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Kategoriler";
+}
+
+<div class="d-flex justify-content-end mb-3">
+    <a asp-controller="AdminCategories" asp-action="Create" class="btn btn-brand">
+        <i class="fas fa-plus me-1"></i> Yeni Kategori
+    </a>
+</div>
+
+<div class="admin_card">
+    @if (Model is not null && Model.Any())
+    {
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Kategori Adı</th>
+                    <th>Açıklama</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <td>@category.Name</td>
+                        <td class="text-muted">@category.Description</td>
+                        <td class="text-end">
+                            <a asp-controller="AdminCategories" asp-action="Edit" asp-route-id="@category.Id"
+                               class="btn btn-sm btn-outline-secondary me-1"><i class="fas fa-pen"></i></a>
+                            <form asp-action="Delete" asp-route-id="@category.Id" method="post" class="d-inline"
+                                  onsubmit="return confirm('Bu kategoriyi silmek istediğinize emin misiniz? Bu kategorideki tüm ürünler de silinecek.');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="text-muted mb-0">Henüz kategori bulunmuyor.</p>
+    }
+</div>

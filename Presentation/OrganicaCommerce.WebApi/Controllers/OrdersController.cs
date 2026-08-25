@@ -51,7 +51,8 @@ namespace OrganicaCommerce.WebApi.Controllers
             };
 
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetById), new { id = result.OrderId }, result);
+            var response = _mapper.Map<CreateOrderResponse>(result);
+            return CreatedAtAction(nameof(GetById), new { id = response.OrderId }, response);
         }
 
         [HttpPut("{id}/status")]

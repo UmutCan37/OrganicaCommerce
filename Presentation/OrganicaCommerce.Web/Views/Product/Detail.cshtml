@@ -1,0 +1,115 @@
+﻿@model OrganicaCommerce.Contracts.Products.ProductDetailResponse
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<!-- Breadcrumb section start -->
+<section class="breadcrumb_sec_1 position-relative">
+    <div class="breadcrumb_wrap sec_space_mid_small"
+         style="background-image: url(/organic-html/assets/images/breadcrumb/breadcrumb1.png);">
+        <div class="breadcrumb_cont text-center">
+            <div class="breadcrumb_title">
+                <h2 class="text-white">@Model.Name</h2>
+            </div>
+            <ul class="list-unstyled breadcrumb_item d-flex justify-content-center align-items-center text-white">
+                <li><a asp-controller="Home" asp-action="Index"><i class="fas fa-home active"></i>Ana Sayfa</a></li>
+                <li><i class="fas fa-chevron-right"></i><a asp-controller="Shop" asp-action="List" class="text-white">Ürünler</a></li>
+                <li><i class="fas fa-chevron-right"></i>@Model.Name</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb section end -->
+<!-- product-10 section start -->
+<section class="product10_sec sec_space_small">
+    <div class="product10_wrap">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 position-relative">
+                    <div class="product10_thumb img_moving_anim1 position-relative d-flex justify-content-center align-items-center">
+                        <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/organic-html/assets/images/product/product1.png" : Model.ImageUrl)"
+                             alt="@Model.Name">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="rating_wrap d-flex justify-content-between">
+                        <span class="review">@Model.CategoryName</span>
+                        @if (Model.Stock > 0)
+                        {
+                            <span class="text-success"><i class="fas fa-check-circle"></i> Stokta (@Model.Stock adet)</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger"><i class="fas fa-times-circle"></i> Stokta Yok</span>
+                        }
+                    </div>
+                    <h2 class="product_detail_title">@Model.Name</h2>
+                    <p class="product_detail_desc py-2">@Model.Description</p>
+                    <div class="product_price">
+                        <span class="sale_price fs-3 fw-bold pe-1">@Model.Price.ToString("C")</span>
+                    </div>
+
+                    @if (Model.Stock > 0)
+                    {
+                        <form id="addToCartForm">
+                            <input type="hidden" id="productId" value="@Model.Id" />
+                            <div class="product10_quantity_btn_wrap d-flex align-items-center mt-4">
+                                <div class="quantity_input bg-white">
+                                    <span class="input_number_decrement" style="cursor:pointer">–</span>
+                                    <input class="input_number" id="quantityInput" type="number" min="1" max="@Model.Stock" value="1" />
+                                    <span class="input_number_increment" style="cursor:pointer">+</span>
+                                </div>
+                                <button type="submit" class="btn custom_btn rounded-pill ms-3 px-5 py-3 text-white border-0">
+                                    Sepete Ekle <i class="fas fa-shopping-bag"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <div id="addToCartMessage" class="mt-3"></div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- product-10 section end -->
+@section Scripts {
+    <script>
+        document.querySelectorAll('.input_number_decrement, .input_number_increment').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const input = document.getElementById('quantityInput');
+                let value = parseInt(input.value) || 1;
+                if (this.classList.contains('input_number_increment')) {
+                    value = Math.min(value + 1, parseInt(input.max));
+                } else {
+                    value = Math.max(value - 1, 1);
+                }
+                input.value = value;
+            });
+        });
+
+        document.getElementById('addToCartForm')?.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const productId = document.getElementById('productId').value;
+            const quantity = parseInt(document.getElementById('quantityInput').value);
+            const messageDiv = document.getElementById('addToCartMessage');
+
+            try {
+                const response = await fetch('/Cart/AddToCart', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId: productId, quantity: quantity })
+                });
+
+                if (response.ok) {
+                    messageDiv.innerHTML = '<span class="text-success">Ürün sepete eklendi.</span>';
+                    location.reload();
+                } else {
+                    messageDiv.innerHTML = '<span class="text-danger">Ürün eklenirken bir hata oluştu.</span>';
+                }
+            } catch {
+                messageDiv.innerHTML = '<span class="text-danger">Bağlantı hatası.</span>';
+            }
+        });
+    </script>
+}

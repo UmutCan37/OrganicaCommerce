@@ -1,31 +1,30 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using OrganicaCommerce.Web.Models;
+using OrganicaCommerce.Web.Services;
 
-namespace OrganicaCommerce.Web.Controllers;
-
-public class HomeController : Controller
+namespace OrganicaCommerce.Web.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly ProductApiClient _productApiClient;
+        private readonly CategoryApiClient _categoryApiClient;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public HomeController(ProductApiClient productApiClient, CategoryApiClient categoryApiClient)
+        {
+            _productApiClient = productApiClient;
+            _categoryApiClient = categoryApiClient;
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        public async Task<IActionResult> Index()
+        {
+            var products = await _productApiClient.GetListAsync();
+            var categories = await _categoryApiClient.GetListAsync();
+            ViewBag.Categories = categories;
+            return View(products);
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }

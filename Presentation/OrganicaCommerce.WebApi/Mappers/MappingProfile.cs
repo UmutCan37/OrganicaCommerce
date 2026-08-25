@@ -30,6 +30,7 @@ namespace OrganicaCommerce.WebApi.Mappers
             CreateMap<GetOrderItemResult, OrderItemResponse>();
             CreateMap<GetOrderByIdResult, OrderDetailResponse>()
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+            CreateMap<CreateOrderResult, CreateOrderResponse>();
 
             CreateMap<LowStockProductResult, LowStockProductResponse>();
             CreateMap<GetDashboardStatsResult, DashboardStatsResponse>();

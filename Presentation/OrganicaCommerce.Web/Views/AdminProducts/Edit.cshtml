@@ -1,0 +1,68 @@
+﻿@model OrganicaCommerce.Contracts.Products.ProductDetailResponse
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Ürünü Düzenle";
+    var categories = ViewBag.Categories as List<OrganicaCommerce.Contracts.Categories.CategoryResponse>;
+}
+
+<div class="admin_card mb-4" style="max-width: 640px;">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Ürün Adı</label>
+            <input name="Name" value="@Model.Name" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Açıklama</label>
+            <textarea name="Description" class="form-control" rows="3">@Model.Description</textarea>
+        </div>
+
+<div class="col-md-6 mb-3">
+    <label class="form-label fw-semibold">Fiyat (₺)</label>
+    <input name="Price" type="number" step="0.01"
+           value="@Model.Price.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+           class="form-control" required />
+</div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Görsel URL</label>
+            <input name="ImageUrl" value="@Model.ImageUrl" class="form-control" />
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label fw-semibold">Kategori</label>
+            <select name="CategoryId" class="form-select" required>
+                @if (categories is not null)
+                {
+                    foreach (var category in categories)
+                    {
+                        <option value="@category.Id" selected="@(category.Id == Model.CategoryId)">@category.Name</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-brand">Değişiklikleri Kaydet</button>
+            <a asp-controller="AdminProducts" asp-action="Index" class="btn btn-outline-secondary">Vazgeç</a>
+        </div>
+    </form>
+</div>
+
+<div class="admin_card" style="max-width: 640px;">
+    <h6 class="fw-semibold mb-3">Stok Güncelle</h6>
+    <p class="text-muted mb-3">Mevcut stok: <strong>@Model.Stock adet</strong></p>
+    <form asp-action="UpdateStock" asp-route-id="@Model.Id" method="post" class="d-flex gap-2 align-items-end">
+        <div>
+            <label class="form-label fw-semibold small">Miktar</label>
+            <input name="quantity" type="number" min="1" value="1" class="form-control" style="width:100px" />
+        </div>
+        <button type="submit" name="isIncrease" value="true" class="btn btn-outline-success">
+            <i class="fas fa-plus"></i> Stok Ekle
+        </button>
+        <button type="submit" name="isIncrease" value="false" class="btn btn-outline-danger">
+            <i class="fas fa-minus"></i> Stok Düş
+        </button>
+    </form>
+</div>

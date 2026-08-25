@@ -1,0 +1,76 @@
+﻿@model OrganicaCommerce.Contracts.Admin.DashboardStatsResponse
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="admin_card stat_card">
+            <div>
+                <p class="stat_label">Toplam Sipariş</p>
+                <p class="stat_value">@Model.TotalOrderCount</p>
+            </div>
+            <div class="stat_icon blue">
+                <i class="fas fa-receipt"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="admin_card stat_card">
+            <div>
+                <p class="stat_label">Toplam Gelir</p>
+                <p class="stat_value">@Model.TotalRevenue.ToString("C")</p>
+            </div>
+            <div class="stat_icon green">
+                <i class="fas fa-sack-dollar"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="admin_card stat_card">
+            <div>
+                <p class="stat_label">Toplam Ürün</p>
+                <p class="stat_value">@Model.TotalProductCount</p>
+            </div>
+            <div class="stat_icon orange">
+                <i class="fas fa-box"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="admin_card">
+    <h5 class="mb-3"><i class="fas fa-triangle-exclamation text-danger me-2"></i>Düşük Stoklu Ürünler</h5>
+
+    @if (Model.LowStockProducts.Any())
+    {
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Ürün</th>
+                    <th>Kalan Stok</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.LowStockProducts)
+                {
+                    <tr>
+                        <td>@product.ProductName</td>
+                        <td><span class="badge rounded-pill" style="background-color:#fee2e2;color:#dc2626;padding:6px 14px;">@product.Stock adet</span></td>
+                        <td>
+                            <a asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@product.ProductId"
+                               class="btn btn-brand btn-sm">Stok Güncelle</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="text-muted mb-0">Düşük stoklu ürün bulunmuyor. 🎉</p>
+    }
+</div>

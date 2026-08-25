@@ -1,0 +1,25 @@
+﻿@model OrganicaCommerce.Contracts.Categories.CategoryResponse
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Kategoriyi Düzenle";
+}
+
+<div class="admin_card" style="max-width: 560px;">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Kategori Adı</label>
+            <input name="Name" value="@Model.Name" class="form-control" required />
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label fw-semibold">Açıklama</label>
+            <textarea name="Description" class="form-control" rows="3">@Model.Description</textarea>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-brand">Değişiklikleri Kaydet</button>
+            <a asp-controller="AdminCategories" asp-action="Index" class="btn btn-outline-secondary">Vazgeç</a>
+        </div>
+    </form>
+</div>

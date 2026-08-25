@@ -1,0 +1,57 @@
+﻿@model List<OrganicaCommerce.Contracts.Orders.OrderListItemResponse>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Siparişler";
+}
+
+<div class="admin_card">
+    @if (Model is not null && Model.Any())
+    {
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Sipariş No</th>
+                    <th>Tarih</th>
+                    <th>Ürün Sayısı</th>
+                    <th>Toplam</th>
+                    <th>Durum</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.OrderByDescending(o => o.CreatedDate))
+                {
+                    <tr>
+                        <td>#@order.OrderId.ToString().Substring(0, 8)</td>
+                        <td>@order.CreatedDate.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>@order.ItemCount</td>
+                        <td>@order.Total.ToString("C")</td>
+                        <td>
+                            @{
+                                var (badgeColor, badgeText) = order.Status switch
+                                {
+                                    "Pending" => ("#fef3c7;color:#d97706", "Beklemede"),
+                                    "Confirmed" => ("#dbeafe;color:#2563eb", "Onaylandı"),
+                                    "Shipped" => ("#e0e7ff;color:#4f46e5", "Kargoda"),
+                                    "Delivered" => ("#dcfce7;color:#16a34a", "Teslim Edildi"),
+                                    "Cancelled" => ("#fee2e2;color:#dc2626", "İptal Edildi"),
+                                    _ => ("#f3f4f6;color:#6b7280", order.Status)
+                                };
+                            }
+                            <span class="badge rounded-pill" style="background-color:@badgeColor;padding:6px 14px;">@badgeText</span>
+                        </td>
+                        <td class="text-end">
+                            <a asp-controller="AdminOrders" asp-action="Detail" asp-route-id="@order.OrderId"
+                               class="btn btn-sm btn-outline-secondary">Detay</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="text-muted mb-0">Henüz sipariş bulunmuyor.</p>
+    }
+</div>

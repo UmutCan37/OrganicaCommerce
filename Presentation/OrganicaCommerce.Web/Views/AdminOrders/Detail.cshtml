@@ -1,0 +1,63 @@
+﻿@model OrganicaCommerce.Contracts.Orders.OrderDetailResponse
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Sipariş Detayı";
+
+    var statusOptions = new[] { "Pending", "Confirmed", "Shipped", "Delivered", "Cancelled" };
+    var statusLabels = new Dictionary<string, string>
+    {
+        { "Pending", "Beklemede" }, { "Confirmed", "Onaylandı" }, { "Shipped", "Kargoda" },
+        { "Delivered", "Teslim Edildi" }, { "Cancelled", "İptal Edildi" }
+    };
+}
+
+<div class="admin_card mb-4">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+            <h5 class="mb-1">Sipariş #@Model.OrderId.ToString().Substring(0, 8)</h5>
+            <p class="text-muted mb-0">@Model.CreatedDate.ToString("dd.MM.yyyy HH:mm")</p>
+        </div>
+        <form asp-action="UpdateStatus" asp-route-id="@Model.OrderId" method="post" class="d-flex gap-2">
+            <select name="newStatus" class="form-select form-select-sm">
+                @foreach (var status in statusOptions)
+                {
+                    <option value="@status" selected="@(status == Model.Status)">@statusLabels[status]</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-brand btn-sm">Güncelle</button>
+        </form>
+    </div>
+
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Ürün</th>
+                <th>Adet</th>
+                <th>Birim Fiyat</th>
+                <th>Toplam</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitPrice.ToString("C")</td>
+                    <td>@((item.UnitPrice * item.Quantity).ToString("C"))</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end fw-semibold">Genel Toplam</td>
+                <td class="fw-bold">@Model.Total.ToString("C")</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<a asp-controller="AdminOrders" asp-action="Index" class="btn btn-outline-secondary">
+    <i class="fas fa-arrow-left me-1"></i> Sipariş Listesine Dön
+</a>
