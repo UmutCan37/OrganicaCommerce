@@ -15,6 +15,11 @@ namespace OrganicaCommerce.Infrastructure.Persistence.Repositories
         {
         }
 
+        public async Task AddCartItemAsync(CartItem cartItem)
+        {
+            await _context.Set<CartItem>().AddAsync(cartItem);
+        }
+
         public async Task<Cart?> GetByUserIdAsync(Guid userId)
         {
             return await _dbSet.Include(c => c.Items)

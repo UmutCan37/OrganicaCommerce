@@ -88,8 +88,12 @@
             });
         });
 
-        document.getElementById('addToCartForm')?.addEventListener('submit', async function (e) {
+              document.getElementById('addToCartForm')?.addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+
             const productId = document.getElementById('productId').value;
             const quantity = parseInt(document.getElementById('quantityInput').value);
             const messageDiv = document.getElementById('addToCartMessage');
@@ -106,9 +110,11 @@
                     location.reload();
                 } else {
                     messageDiv.innerHTML = '<span class="text-danger">Ürün eklenirken bir hata oluştu.</span>';
+                    submitBtn.disabled = false;
                 }
             } catch {
                 messageDiv.innerHTML = '<span class="text-danger">Bağlantı hatası.</span>';
+                submitBtn.disabled = false;
             }
         });
     </script>

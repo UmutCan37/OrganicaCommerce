@@ -37,9 +37,28 @@ namespace OrganicaCommerce.Application.CQRS.Cart.Handlers
                     CreatedDate=DateTime.UtcNow
                 };
                 await _unitOfWork.Carts.AddAsync(cart);
+                await _unitOfWork.SaveChangesAsync();
 
             }
-            cart.AddItem(product.Id, request.Quantity, product.Price);
+            var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == request.ProductId);
+
+            if (existingItem is not null)
+            {
+                existingItem.Quantity += request.Quantity;
+            }
+            else
+            {
+                var newItem = new Domain.Entities.CartItem
+                {
+                    Id = Guid.NewGuid(),
+                    CartId = cart.Id,
+                    ProductId = product.Id,
+                    Quantity = request.Quantity,
+                    UnitPrice = product.Price
+                };
+
+                await _unitOfWork.Carts.AddCartItemAsync(newItem);
+            }
 
             await _unitOfWork.SaveChangesAsync();
 

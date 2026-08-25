@@ -9,6 +9,7 @@ namespace OrganicaCommerce.Application.Common.Interfaces
 {
     public interface ICartRepository : IGenericRepository<Cart>
     {
+        Task AddCartItemAsync(CartItem cartItem);
         Task<Cart?> GetByUserIdAsync(Guid userId);
     }
 }
