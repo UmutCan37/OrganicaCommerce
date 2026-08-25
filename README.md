@@ -161,3 +161,16 @@ Solution → sağ tık → **Configure Startup Projects** → **Multiple startup
 **Made with 🌱 and Clean Architecture**
 
 </div>
+<img width="1892" height="866" alt="Ekran görüntüsü 2026-08-25 220017" src="https://github.com/user-attachments/assets/a485d200-7e86-4520-a860-862c5788afaa" />
+<img width="1894" height="864" alt="Ekran görüntüsü 2026-08-25 215930" src="https://github.com/user-attachments/assets/37594229-1293-4d87-8e9a-cfe292487e1d" />
+<img width="1896" height="940" alt="Ekran görüntüsü 2026-08-25 215906" src="https://github.com/user-attachments/assets/2c101600-0e7c-4d5a-aac5-e3a4c6faf420" />
+<img width="1898" height="940" alt="Ekran görüntüsü 2026-08-25 215854" src="https://github.com/user-attachments/assets/09085dc9-219b-4936-8905-737728b98a52" />
+<img width="1898" height="332" alt="Ekran görüntüsü 2026-08-25 215843" src="https://github.com/user-attachments/assets/642229a8-1095-4a08-83f3-c63e03bf80a3" />
+<img width="1910" height="724" alt="Ekran görüntüsü 2026-08-25 215836" src="https://github.com/user-attachments/assets/ba5cf6e6-c3fe-4711-b441-ef2e1ae1626c" />
+<img width="1900" height="928" alt="Ekran görüntüsü 2026-08-25 221624" src="https://github.com/user-attachments/assets/ae42058c-4d66-4627-a6dd-0eec0a04b7fd" />
+<img width="1900" height="932" alt="Ekran görüntüsü 2026-08-25 221616" src="https://github.com/user-attachments/assets/e0d7cdf9-c72a-451c-9a74-abf337227971" />
+<img width="1892" height="940" alt="Ekran görüntüsü 2026-08-25 221610" src="https://github.com/user-attachments/assets/716fcc1a-b410-4e96-b940-a0fe8ca86d73" />
+<img width="1890" height="940" alt="Ekran görüntüsü 2026-08-25 221602" src="https://github.com/user-attachments/assets/f92dea81-0c0c-42cb-a31c-8350d756a935" />
+<img width="1904" height="940" alt="Ekran görüntüsü 2026-08-25 221555" src="https://github.com/user-attachments/assets/1fc9df83-8cc9-4128-b9ca-1ee0f3951041" />
+<img width="1896" height="942" alt="Ekran görüntüsü 2026-08-25 221547" src="https://github.com/user-attachments/assets/225b4b62-6db8-4b41-adfb-b01bd71f0307" />
+<img width="1898" height="988" alt="Ekran görüntüsü 2026-08-25 220059" src="https://github.com/user-attachments/assets/082e550f-39a1-4df7-8fea-9fe3ad4b1004" />
